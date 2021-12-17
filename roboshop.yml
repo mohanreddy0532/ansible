@@ -1,0 +1,5 @@
+- name: Frontend setup
+  hosts: FRONTEND
+  tasks:
+
+

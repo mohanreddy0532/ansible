@@ -60,10 +60,14 @@
 - name: Register variables
   hosts: all
   tasks:
-    - name: Uptime Command
-      ansible.builtin.shell: uptime
+    - name: ls Command
+      ansible.builtin.shell: ls
       register: out
 
     - name: Print ouptut
       ansible.builtin.debug:
         msg: "{{out.stdout}}"
+
+    - name: Declare a varibale
+      ansible.builtin.set_fact:
+        CMD_OUTPUT: "{{out.stdout}}"
