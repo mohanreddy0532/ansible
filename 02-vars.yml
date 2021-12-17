@@ -32,3 +32,12 @@
         msg: URL - {{URL}}
       vars:
         URL: second-task.example.com
+
+## Key take away : Tasks level variable , the scope is only for that task.
+
+- name: Play for Inventory Variable
+  hosts: all
+  tasks:
+    - name: Print URL
+      ansible.builtin.debug:
+        msg: URL - {{URL}}
