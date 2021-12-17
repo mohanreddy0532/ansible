@@ -3,5 +3,5 @@
   tasks:
     - name: Task1
       ansible.builtin.debug:
-        msg: Hello from Playbook Play
+        msg: 'Hello from Playbook Play'
 
