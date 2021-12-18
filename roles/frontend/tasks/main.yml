@@ -26,3 +26,13 @@
     dest: /tmp
     remote_src: yes
 
+- name: Remove Old Html Web Pages
+  ansible.builtin.file:
+    path: /usr/share/nginx/html
+    state: absent
+
+- name: Copy the HTML Files
+  ansible.builtin.copy:
+    src: /tmp/frontend-main/static/
+    dest: /usr/share/nginx/html/
+    remote_src: yes
