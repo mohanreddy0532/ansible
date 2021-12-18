@@ -4,5 +4,10 @@
   roles:
     - frontend
 
+- name: MongoDB setup
+  hosts: MONGODB
+  become: yes
+  roles:
+    - mongodb
 
 
