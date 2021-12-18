@@ -3,6 +3,12 @@
 #1. Create an SPOT instance
 #2. Take that Instance IP & register in DNS
 
+if [ -z "$1" ]; then
+  echo "Input is missing"
+  exit 1
+fi
+
+
 TEMP_ID="lt-00c437664b04d92df"
 TEMP_VER=2
 
