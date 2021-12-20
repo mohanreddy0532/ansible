@@ -12,5 +12,11 @@
     - name: Common
       debug:
         msg: Hello from Common
-  
 
+- name: demo of tag on play level - frontend
+  tags: frontend
+  hosts: localhost
+  tasks:
+    - name: Frontend
+      debug:
+        msg: Hello from Frontend
