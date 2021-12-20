@@ -1,0 +1,49 @@
+
+#  ## NOTE: We need to update the IP address of MONGODB Server in systemd.service file
+#
+#
+#Now, lets set up the service with systemctl.
+#
+#```
+#  # mv /home/roboshop/catalogue/systemd.service /etc/systemd/system/catalogue.service
+#  # systemctl daemon-reload
+#  # systemctl start catalogue
+#  # systemctl enable catalogue
+#```
+#
+
+- name: Install NodeJS Service
+  ansible.builtin.yum:
+    name:
+      - nodejs
+      - make
+      - gcc-c++
+    state: installed
+
+- name: Add Application User
+  ansible.builtin.user:
+    name: roboshop
+
+- name: Download and UnZip the Catalogue Content
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: download
+
+- name: Remove Old App Content
+  ansible.builtin.file:
+    path: /home/roboshop/catalogue
+    state: absent
+
+- name: Copy App Content
+  ansible.builtin.copy:
+    src: /tmp/catalogue-main/
+    dest: /home/roboshop/catalogue/
+    remote_src: yes
+  become_user: roboshop
+
+- name: Install NodejS Dependencies.
+  community.general.npm:
+    path: /home/roboshop/catalogue
+  become_user: roboshop
+
+
