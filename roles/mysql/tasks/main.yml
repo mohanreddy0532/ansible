@@ -60,4 +60,4 @@
 
 - name: Change the Password
   ansible.builtin.shell: mysql --connect-expired-password -uroot -p"{{mysql_default_password.stdout}}" </tmp/root-pass-reset.sql
-  
+

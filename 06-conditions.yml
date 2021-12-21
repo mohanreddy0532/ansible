@@ -1,0 +1,13 @@
+- name: Demo on conditions
+  hosts: localhost
+  vars:
+    abc: ABC
+  tasks:
+    - name: Condition with String
+      debug:
+        msg: "abc var = ABC"
+      when: abc == "ABC"
+    - name: Condition with String
+      debug:
+        msg: "abc var = abc"
+      when: abc == "abc"
