@@ -27,4 +27,4 @@
     - name: Run on boolean
       debug:
         msg: "Applying"
-      when: apply
+      when: apply | bool 
