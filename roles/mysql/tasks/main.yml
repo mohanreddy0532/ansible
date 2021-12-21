@@ -47,6 +47,19 @@
   ansible.builtin.shell: grep 'temporary password' /var/log/mysqld.log  | awk '{print $NF}'
   register: mysql_default_password
 
-- name: print the password
-  debug:
-    msg: "{{mysql_default_password}}"
+#- name: print the password
+#  debug:
+#    msg: "{{mysql_default_password.stdout}}"
+
+- name: Copy SQL Script for Password reset
+  ansible.builtin.template:
+    src: root-pass-reset.sql
+    dest: /tmp/root-pass-reset.sql
+
+- name: Change the Password
+  community.mysql.mysql_db:
+    state: import
+    name: all
+    target: /tmp/root-pass-reset.sql
+    login_user: root
+    login_password: "{{mysql_default_password.stdout}}"
