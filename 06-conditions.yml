@@ -2,6 +2,7 @@
   hosts: localhost
   vars:
     abc: ABC
+    val: 100
   tasks:
     - name: Condition with String
       debug:
@@ -11,3 +12,13 @@
       debug:
         msg: "abc var = abc"
       when: abc == "abc"
+
+    - name: Condition with Number
+      debug:
+        msg: "Val var is less than 100"
+      when: val < 100
+
+    - name: Condition with Number
+      debug:
+        msg: "Val var is greater than 100"
+      when: val > 100
