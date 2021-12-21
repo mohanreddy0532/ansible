@@ -80,7 +80,8 @@
 
 - name: Load Schema
   community.mysql.mysql_db:
-    state: dump
+    state: import
+    name: all
     target: /tmp/mysql-main/shipping.sql
     login_user: root
     login_password: "{{MYSQL_ROOT_PASSWORD}}"
