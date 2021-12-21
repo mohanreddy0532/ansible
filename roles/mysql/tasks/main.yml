@@ -1,14 +1,4 @@
 
-#    Run the following SQL commands to remove the password policy.
-#    > uninstall plugin validate_password;
-#    Setup Needed for Application.
-#    As per the architecture diagram, MySQL is needed by
-#
-#    Shipping Service
-#    So we need to load that schema into the database, So those applications will detect them and run accordingly.
-#
-#    To download schema, Use the following command
-#
 #    # curl -s -L -o /tmp/mysql.zip "https://github.com/roboshop-devops-project/mysql/archive/main.zip"
 #    Load the schema for Services.
 #
@@ -82,4 +72,17 @@
     login_password: "{{MYSQL_ROOT_PASSWORD}}"
   when: out.rc | int == 0
   ignore_errors: true
+
+- name: Download MySQL Schema files
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: download
+
+- name: Load Schema
+  community.mysql.mysql_db:
+    state: dump
+    target: /tmp/mysql-main/shipping.sql
+    login_user: root
+    login_password: "{{MYSQL_ROOT_PASSWORD}}"
+
 
