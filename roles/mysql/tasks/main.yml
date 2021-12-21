@@ -41,7 +41,7 @@
     login_user: root
     login_password: "{{MYSQL_ROOT_PASSWORD}}"
   register: out
-  ignore_errors: true 
+  ignore_errors: true
 
 - name: Change the default password
   when: out.failed | bool
@@ -58,6 +58,15 @@
     - name: Change the Password
       ansible.builtin.shell: mysql --connect-expired-password -uroot -p"{{mysql_default_password.stdout}}" </tmp/root-pass-reset.sql
 
+- name: Check if validate password plugin is there or not
+  community.mysql.mysql_query:
+    query: "show plugins"
+    login_user: root
+    login_password: "{{MYSQL_ROOT_PASSWORD}}"
+  register: out
 
-
+- name: Print
+  debug:
+    msg: "{{out}}"
+    
 
