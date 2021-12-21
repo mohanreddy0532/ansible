@@ -5,7 +5,7 @@
       - name: "Searching for a String"
         lineinfile:
           path: /tmp/1.txt
-          line: "password"
+          line: "new"
           state: present
         check_mode: yes
         register: presence
