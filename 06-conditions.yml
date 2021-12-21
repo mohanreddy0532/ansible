@@ -20,5 +20,5 @@
 
     - name: Condition with Number
       debug:
-        msg: "Val var is greater than 100"
+        msg: "Val var is greater than or equal to 100"
       when: val >= 100
