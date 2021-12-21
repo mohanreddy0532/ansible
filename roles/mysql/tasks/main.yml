@@ -81,5 +81,5 @@
     login_user: root
     login_password: "{{MYSQL_ROOT_PASSWORD}}"
   when: out.rc | int == 0
-
+  ignore_errors: true
 
