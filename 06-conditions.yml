@@ -27,4 +27,15 @@
     - name: Run on boolean
       debug:
         msg: "Applying"
-      when: apply | bool 
+      when: apply | bool
+      # apply - will run if apply is true
+      # not apply - will run if apply is false
+
+## Multiple conditions are possible , and - both condtions are true, or - any condtions is true
+
+    - name: Multi Condition
+      debug:
+        msg: Val of abc = ABC and Val of val is 50
+      when: abc == "ABC" and val == 50
+
+
