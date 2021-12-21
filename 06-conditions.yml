@@ -3,6 +3,7 @@
   vars:
     abc: ABC
     val: 50
+    apply: true
   tasks:
     - name: Condition with String
       debug:
@@ -22,3 +23,8 @@
       debug:
         msg: "Val var is greater than or equal to 100"
       when: val | int  >= 100
+
+    - name: Run on boolean
+      debug:
+        msg: "Applying"
+      when: apply
