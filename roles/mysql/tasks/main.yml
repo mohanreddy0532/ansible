@@ -80,6 +80,6 @@
     query: "uninstall plugin validate_password"
     login_user: root
     login_password: "{{MYSQL_ROOT_PASSWORD}}"
-  when: out.rc | int = 0
+  #when: out.rc | int = 0
 
 
