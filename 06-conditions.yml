@@ -16,9 +16,9 @@
     - name: Condition with Number
       debug:
         msg: "Val var is less than 100"
-      when: val < 100
+      when: val | int  < 100
 
     - name: Condition with Number
       debug:
         msg: "Val var is greater than or equal to 100"
-      when: val >= 100
+      when: val | int  >= 100
