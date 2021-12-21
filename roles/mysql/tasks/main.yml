@@ -71,6 +71,6 @@
 #    msg: "{{out}}"
 
 - name: Uninstall validate password plugin
-  ansible.builtin.shell: (echo 'show plugins' | mysql -uroot -p"{{MYSQL_ROOT_PASSWORD}}" | grep validate_password) && (echo 'uninstall plugin validate_password' | mysql -uroot -p"{{MYSQL_ROOT_PASSWORD}}"
+  ansible.builtin.shell: (echo 'show plugins;' | mysql -uroot -p"{{MYSQL_ROOT_PASSWORD}}" | grep validate_password) && (echo 'uninstall plugin validate_password;' | mysql -uroot -p"{{MYSQL_ROOT_PASSWORD}})"
   ignore_errors: true
 
