@@ -1,0 +1,30 @@
+#Install GoLang
+## yum install golang -y
+#Add roboshop User
+## useradd roboshop
+#Switch to roboshop user and perform the following commands.
+#$ curl -L -s -o /tmp/dispatch.zip https://github.com/roboshop-devops-project/dispatch/archive/refs/heads/main.zip
+#$ unzip /tmp/dispatch.zip
+#$ mv dispatch-main dispatch
+#$ cd dispatch
+#$ go mod init dispatch
+#$ go get
+#$ go build
+#Update the systemd file and configure the systemd service
+## mv /home/roboshop/dispatch/systemd.service /etc/systemd/system/dispatch.service
+## systemctl daemon-reload
+## systemctl enable dispatch
+## systemctl start dispatch
+
+- name: Install Golang
+  ansible.builtin.golang:
+    name: golang
+    state: installed
+
+- name: Application User Setup and Download App Files
+  import_tasks: app-user-setup.yml
+
+- name: Install App Dependencies
+  ansible.builtin.shell: go mod init {{COMPONENT}} && go get go build
+  args:
+    chdir: /home/roboshop/{{COMPONENT}}
