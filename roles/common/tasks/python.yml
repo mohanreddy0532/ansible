@@ -14,9 +14,17 @@
     requirements: /home/roboshop/{{COMPONENT}}/requirements.txt
     executable: pip3
 
-- name: Show app user ingo
-  debug:
-    msg: "{{app_user_info}}"
+- name: Update UID info App Configuration
+  ansible.builtin.lineinfile:
+    path: /home/roboshop/{{COMPONENT}}/{{COMPONENT}}.ini
+    regexp: '^uid'
+    line: uid = {{app_user_info.uid}}
+
+- name: Update GID info App Configuration
+  ansible.builtin.lineinfile:
+    path: /home/roboshop/{{COMPONENT}}/{{COMPONENT}}.ini
+    regexp: '^gid'
+    line: uid = {{app_user_info.group}}
 
 #- name: Setup Service and Start Service
 #  import_tasks: systemd.yml
