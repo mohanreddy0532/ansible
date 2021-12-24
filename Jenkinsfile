@@ -7,7 +7,7 @@ pipeline {
   stages {
     stage('Ansible Playbook Run') {
       steps {
-        sh 'ansible-playbook 08-parallel-plays.yml'
+        sh 'ansible-playbook 08-parallel-plays.yml -e ENV=DEV'
       }
     }
   }
