@@ -15,7 +15,7 @@ pipeline {
         sh 'bash ec2-launch.sh ${COMPONENT}'
       }
     }
-    
+
     stage('Ansible Playbook Run') {
       steps {
         script {
