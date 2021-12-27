@@ -9,6 +9,10 @@ pipeline {
     string(name: 'COMPONENT', defaultValue: '', description: 'Which App Component')
   }
 
+  environment {
+    SSH = credentials('CENTOS')
+  }
+
   stages {
     stage('Create Server') {
       steps {
@@ -21,8 +25,8 @@ pipeline {
         script {
           env.ANISIBLE_TAG=COMPONENT.toUpperCase()
         }
-        sh 'sleep 60'
-        sh 'ansible-playbook -i roboshop.inv roboshop.yml -e ENV=${ENV} -t ${ANISIBLE_TAG}'
+        //sh 'sleep 60'
+        sh 'ansible-playbook -i roboshop.inv roboshop.yml -e ENV=${ENV} -t ${ANISIBLE_TAG} -e ansible_password=${SSH_PSW} -u ${SSH_USR}'
       }
     }
   }
