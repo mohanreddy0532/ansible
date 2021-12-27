@@ -4,7 +4,7 @@ pipeline {
     ansiColor('xterm')
   }
 
-  parametes {
+  parameters {
     choice(name: 'ENV', choices: ['DEV', 'PROD'], description: 'Choose Env')
     string(name: 'COMPONENT', defaultValue: '', description: 'Which App Component')
   }
