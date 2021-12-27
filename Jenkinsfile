@@ -12,7 +12,7 @@ pipeline {
   stages {
     stage('Create Server') {
       steps {
-        sh 'bash ec2-launch.sh ${COMPONENT}' ${ENV}
+        sh 'bash ec2-launch.sh ${COMPONENT} ${ENV}'
       }
     }
 
