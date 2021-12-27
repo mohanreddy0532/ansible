@@ -19,7 +19,7 @@ pipeline {
     stage('Ansible Playbook Run') {
       steps {
         script {
-          def ANISIBLE_TAG=toUpperCase(${COMPONENT})
+          def ANISIBLE_TAG=toUpperCase(COMPONENT)
         }
         sh 'ansible-playbook -i roboshop.inv roboshop.yml -e ENV=${ENV} -t ${ANISIBLE_TAG}'
       }
