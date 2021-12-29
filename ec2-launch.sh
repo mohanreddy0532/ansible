@@ -1,10 +1,7 @@
 #!/bin/bash
 
-#1. Create an SPOT instance
-#2. Take that Instance IP & register in DNS
-
 if [ -z "$1" ]; then
-  echo -e "\e[1;31mInput is missing\e[0m"
+  echo -e "\e[1;31mInput is Missing\e[0m"
   exit 1
 fi
 
@@ -12,25 +9,28 @@ COMPONENT=$1
 ENV=$2
 
 if [ ! -z "$ENV" ]; then
-  ENV="-${ENV}"
+   ENV="-${ENV}"
 fi
 
-
-TEMP_ID="lt-0460a6c5d87a104d3"
-TEMP_VER=2
-ZONE_ID=Z06421191721I0AOBUGO2
+TEMP_ID="lt-0371737b9b36fe546"
+TEMP_VER=1
+ZONE_ID=Z079880618UTU9V8KYVX0
 
 CREATE_INSTANCE() {
-  ## Check if instance is already there
-  aws ec2 describe-instances --filters "Name=tag:Name,Values=${COMPONENT}" | jq .Reservations[].Instances[].State.Name | sed 's/"//g' | grep -E 'running|stopped' &>/dev/null
-  if [ $? -eq -0 ]; then
-    echo -e "\e[1;33mInstance is already there\e[0m"
-  else
-    aws ec2 run-instances --launch-template LaunchTemplateId=${TEMP_ID},Version=${TEMP_VER} --tag-specifications "ResourceType=spot-instances-request,Tags=[{Key=Name,Value=${COMPONENT}}]" "ResourceType=instance,Tags=[{Key=Name,Value=${COMPONENT}}]" | jq
-  fi
+aws ec2 describe-instances --filters "Name=tag:Name,Values=${COMPONENT}" | jq .Reservations[].Instances[].State.Name | sed 's/"//g' | grep -E 'running|stopped' &>/dev/null
+if [ $? -eq 0 ]; then
+  echo -e "\e[1;32mInstance Already there,please check\e[0m"
+else
+#First instance
+#aws ec2 run-instances --launch-template LaunchTemplateId=${TEMP_ID},Version=${TEMP_VER} | jq
+#instance with Tag Name....##
+aws ec2 run-instances --launch-template LaunchTemplateId=${TEMP_ID},Version=${TEMP_VER} --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=${COMPONENT}}]"| jq
 
-  sleep 10
+fi
 
+sleep 10
+
+#DNS Update
   IPADDRESS=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=${COMPONENT}" | jq .Reservations[].Instances[].PrivateIpAddress | sed 's/"//g' | grep -v null)
 
   # Update the DNS record
@@ -39,7 +39,7 @@ CREATE_INSTANCE() {
 }
 
 if [ "$COMPONENT" == "all" ]; then
-  for comp in frontend mongodb catalogue redis user cart mysql shipping rabbitmq payment dispatch ; do
+  for comp in frontend mongodb catalogue redis user; do
     COMPONENT=$comp$ENV
     CREATE_INSTANCE
   done
@@ -47,5 +47,3 @@ else
   COMPONENT=$COMPONENT$ENV
   CREATE_INSTANCE
 fi
-
-
