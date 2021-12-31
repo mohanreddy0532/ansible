@@ -42,7 +42,8 @@ options {
   stages {
     stage('Ansible Playbook Run') {
       steps {
-        sh 'ansible --version;hostname -I;date;'
+        sh 'ansible --version;hostname -I'
+        sh 'uname -a;uptime;date'
       }
     }
   }
