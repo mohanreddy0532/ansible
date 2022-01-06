@@ -20,10 +20,16 @@
     state: started
     enabled: yes
 
+#- name: Download MongoDB Schema files
+#  ansible.builtin.import_role:
+#    name: common
+#    tasks_from: download
 - name: Download MongoDB Schema files
   ansible.builtin.import_role:
     name: common
     tasks_from: download
+  vars:
+    GIT_DOWNLOAD: true
 
 - name: Load Schema
   community.mongodb.mongodb_shell:
