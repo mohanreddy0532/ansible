@@ -20,3 +20,4 @@ ids=$(aws ec2 describe-instances | jq .Reservations[].Instances[].InstanceId| se
 #Above two in a line
 #aws ec2 terminate-instances --instance-ids `(aws ec2 describe-instances | jq .Reservations[].Instances[].InstanceId| sed 's/"//g')`
 ##
+##
