@@ -1,2 +1,22 @@
 - name: Set Hostname
   ansible.builtin.shell: set-hostname {{COMPONENT}}-{{ENV}}
+
+- name: Install Node_Exporter
+  shell: curl -s https://raw.githubusercontent.com/linuxautomations/labautomation/master/tools/prometheus-node-exporter/install.sh | bash
+  when: COMPONENT_TYPE == "APP"
+
+- name: Update Rsyslog Config
+  template:
+    src: rsyslog.conf
+    dest: /etc/rsyslog.d/roboshop.conf
+  when: COMPONENT_TYPE == "APP"
+
+- name: Restart Rsyslog
+  systemd:
+    name: rsyslog
+    state: restarted
+    enabled: yes
+  when: COMPONENT_TYPE == "APP"
+
+- name: Filebeat Config
+  import_tasks: filebeat.yml
