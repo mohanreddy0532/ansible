@@ -1,8 +1,37 @@
+#filebeat.inputs:
+#- type: filestream
+#  enabled: true
+#  paths:
+#    - /var/log/{{COMPONENT}}.log
+#
+#output.logstash:
+#  hosts: ["logstash.roboshop.internal:5044"]
+#
+### Defaults
+#filebeat.config.modules:
+#  path: ${path.config}/modules.d/*.yml
+#  reload.enabled: false
+#setup.template.settings:
+#  index.number_of_shards: 1
+#
+#processors:
+#  - add_host_metadata:
+#      when.not.contains.tags: forwarded
+#  - add_cloud_metadata: ~
+#  - add_docker_metadata: ~
+#  - add_kubernetes_metadata: ~
 filebeat.inputs:
 - type: filestream
   enabled: true
   paths:
-    - /var/log/{{COMPONENT}}.log
+    - {{LOG_FILE}}
+  fields:
+    componentName: {{COMPONENT}}
+    env: {{ENV}}
+    logType: {{LOG_TYPE}}
+{% if LOG_TYPE == "json" %}
+  json.keys_under_root: true
+{% endif %}
 
 output.logstash:
   hosts: ["logstash.roboshop.internal:5044"]
