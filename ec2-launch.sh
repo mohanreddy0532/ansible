@@ -47,3 +47,5 @@ else
   COMPONENT=$COMPONENT$ENV
   CREATE_INSTANCE
 fi
+
+# aws ec2 terminate-instances --instance-ids $ids
