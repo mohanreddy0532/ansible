@@ -10,7 +10,7 @@ pipeline {
   }
 
   environment {
-    SSH = credentials('CENTOS')
+    SSH = credentials('centos')
   }
 
   stages {
