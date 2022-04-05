@@ -1,4 +1,4 @@
-- name: COpy Logstash Config
+- name: Copy Logstash Config
   template:
     src: logstash.conf
     dest: /etc/logstash/conf.d/logstash.conf
